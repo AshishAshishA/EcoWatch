@@ -138,8 +138,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -162,5 +163,8 @@ CKEDITOR_CONFIGS = {
 CKEDITOR_BROWSE_SHOW_DIRS = True
 
 # STATICFILES_DIRS=[BASE_DIR / "static"]
+<<<<<<< HEAD
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+=======
+>>>>>>> c46384cb6874a6eafb7cfed272470e240cfcdb4a
