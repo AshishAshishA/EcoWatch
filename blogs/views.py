@@ -157,7 +157,7 @@ def generate_gpt_input_value(request):
 
         return completion_text
 
-    ai21.api_key = 'DyCMgHSZnyTAUwD1yKUfqwhUadC4xynU'
+    # ai21.api_key = 'DyCMgHSZnyTAUwD1yKUfqwhUadC4xynU'
     if request.method == "POST":
         print('inside post')
         blog_post = request.POST.get('gpt-body')
