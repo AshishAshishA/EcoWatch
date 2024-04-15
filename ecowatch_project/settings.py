@@ -58,6 +58,7 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -97,8 +98,9 @@ DATABASES = {
     }
 }
 
-database_url=os.environ.get('DATABASE_URL')
+
 # database_url = 'postgres://ashish:CGlLQXplKZu9VHcxuSdGZJIvZBfJTK6e@dpg-codeh3ol6cac73bip7sg-a.oregon-postgres.render.com/ecowatch_app'
+database_url=os.environ.get('DATABASE_URL')
 DATABASES['default']= dj_database_url.parse(database_url)
 
 
@@ -160,3 +162,5 @@ CKEDITOR_CONFIGS = {
 CKEDITOR_BROWSE_SHOW_DIRS = True
 
 # STATICFILES_DIRS=[BASE_DIR / "static"]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
