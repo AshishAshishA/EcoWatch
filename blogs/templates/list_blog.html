@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="filter">
+        <select name="category" id="category-filter" onchange="filterByCategory(this)">
+            <option value="">SELECT CATEGORY</option>
+            {% for category in categories %}
+                <option value="{% url 'category' category.name %}">
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="navbar">
+        <a href="{% url 'create' %}">Create Blog</a>
+    </div>
+    <div>
+        {% if cat != '' %}
+            <h3>{{cat}}</h3>
+        {% endif %}
+        {% if latest_blog and page_obj.number == 1 %}
+            <div>
+                <a href="{% url 'detail' latest_blog.slug latest_blog.id %}">{{latest_blog.title}}</a>
+                    <p>{{latest_blog.body|safe}}</p>
+                    <p>created at: {{latest_blog.created_on}}</p>
+                    <p>updated at: {{latest_blog.last_modified}}</p>
+                    <p>views: {{latest_blog.views}}</p>
+                    
+            </div>
+        {% endif %}
+        {% for blog in blogs %}
+            <div>
+                {% if blog.id != latest_id %}
+                    <a href="{% url 'detail' blog.slug blog.id %}">{{blog.title}}</a>
+                    <p>{{blog.body|safe}}</p>
+                    <p>created at:{{blog.created_on}}</p>
+                    <p>updated at: {{blog.last_modified}}</p>
+                    <p>views: {{blog.views}}</p>
+                {% endif %}
+                
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <script>
+        function filterByCategory(selectElement) {
+            const url = selectElement.value;
+            if (url) {
+                window.location.href = url;
+            }
+        }
+    </script>
+</body>
+</html>

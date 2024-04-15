@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Blog</title>
+</head>
+<body>
+    <div style="display: flex;">
+        <div>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {{ form.media }}
+                <button type="submit">POST</button>
+            </form>
+        </div>
+
+        <!-- {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.errors }}
+                {{ field.label_tag }}
+            </div>
+        {% endfor %} -->
+        
+        <div style="margin-top: 15%; margin-left: 5%;">
+            <h3>Wanna Generate Title with Ai</h3>
+            <p>Just copy paste the body below and click generate</p>
+
+            <form action="{% url 'generate-with-gpt' %}" method="post" target="_blank">
+                {% csrf_token %}
+                <label for="gpt-body">body</label>
+                <textarea name="gpt-body" id="gpt-body" cols="30" rows="10"></textarea>
+                <button type="submit">Generate Title</button>
+            </form>
+
+            {% if ai_title %}
+                <p>{{ai_title}}</p>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        // const formTitleInput = document.getElementById('form-title');
+        // const gptBodyInput = document.getElementById('gpt-body');
+        // const formBodyInput = document.getElementById('form-body'); // This is your rich text editor
+
+        // if ("{{ ai_title|escapejs }}") {
+        //     formTitleInput.value = "{{ ai_title|escapejs }}";
+        // }
+
+        // if ("{{ blog_post|escapejs }}") {
+        //     gptBodyInput.value = "{{ blog_post|escapejs }}";
+
+        //     // If you are using CKEditor for 'form-body', set the data using CKEditor API
+        //     const formBodyEditor = CKEDITOR.instances['form-body'];
+        //     console.log(formBodyEditor)
+        //     if (formBodyEditor) {
+        //         formBodyEditor.setData("{{ blog_post|escapejs }}");
+        //     } else {
+        //         // Fallback: Set the value directly if CKEditor is not found
+        //         formBodyInput.value = "{{ blog_post|escapejs }}";
+        //     }
+        // }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!-- waste_site_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waste Site List</title>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'upload_and_tag' %}">Upload and Tag Waste Site</a>
+        <a href="{% url 'home' %}">Interactive Blog Section</a>
+    </div>
+    <h1>Waste Site List</h1>
+    <ul>
+        {% for waste_site in waste_sites %}
+            <li><a href="https://www.google.com/maps?q={{ waste_site.latitude }},{{ waste_site.longitude }}" target="_blank">Navigate to site</a></li>
+            <li><strong>Description:</strong> {{ waste_site.description }}</li>
+            <li><strong>Video:</strong> 
+                {% if waste_site.video %}
+                    <video width="320" height="240" controls>
+                        <source src="{{ waste_site.video.video_file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% else %}
+                    No video available
+                {% endif %}
+            </li>
+            <!-- Display other waste site details as needed -->
+        {% endfor %}
+    </ul>
+</body>
+</html>

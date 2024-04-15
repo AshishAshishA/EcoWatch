@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <title>Environmental Blog</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="{% url 'home' %}">Home</a>
+        {% if blog.slug and blog.id %}
+            <a href="{% url 'update' blog.slug blog.id %}">update blog</a>
+        {% endif %}
+    </div>
+    <div>
+        <p>{{blog.title}}</p>
+        <p>created_at: {{blog.created_on}}</p>
+        <p>views: {{blog.views}}</p>
+
+        <p>{{blog.body|safe}}</p>
+
+        <p>last updated at: {{blog.last_modified}}</p>
+        <p>Categories:</p>
+        {% for category in blog.categories.all %}
+            <p>{{category.name}}</p>
+        {% endfor %}
+        
+        <div>
+            <form action="{% url 'delete' blog.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Delete Blog</button>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <h3>Comment:</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+
+            <button>
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </button>
+        </form>
+    </div>
+    <div>
+        <h4>Comments</h4>
+        {% for comment in comments %}
+            <p>{{comment.author}}</p>
+            <p>{{comment.body}}</p>
+            <p>{{comment.created}}</p>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!-- base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Django Project{% endblock %}</title>
+    {% block extra_head %}
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    <!-- Content of your page goes here -->
+    {% endblock %}
+    {% block extra_scripts %}
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    {% endblock %}
+</body>
+</html>

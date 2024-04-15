@@ -1,0 +1,76 @@
+<!-- upload_and_tag.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Upload Video and Tag Waste Site{% endblock %}
+
+{% block content %}
+<h1>Upload Video and Tag Waste Site</h1>
+<form id="uploadAndTagForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="name">City Name:</label>
+    <input type="text" id="city_name" name="city_name" required>
+
+    <h2>Upload Video</h2>
+
+    <input type="file" id="video_file" name="video_file" accept="video/*" required>
+    
+    <h2>Tag Waste Site</h2>
+    <button type="button" onclick="getUserLocation()">Use My Current Location</button>
+    <div id="map" style="height: 400px;"></div>
+    <input type="hidden" name="latitude" id="latitude">
+    <input type="hidden" name="longitude" id="longitude">
+    
+    <label for="description">Description</label>
+    <textarea name="description" id="description" rows="6" cols="50" placeholder="Describe a little about the type of waste present, the condition of the site, effects on local animals and environment"></textarea>
+    
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
+
+{% block extra_scripts %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    var map; // Declare map variable outside the function
+
+    function initMap() {
+        map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    }
+
+    function getUserLocation() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+
+                map.setView([position.coords.latitude, position.coords.longitude], 13); // Center map on user's location
+
+                var marker = L.marker([position.coords.latitude, position.coords.longitude], { draggable: true }).addTo(map);
+                
+                // When marker is dragged, update the latitude and longitude fields
+                marker.on('dragend', function (event) {
+                    var position = marker.getLatLng();
+                    document.getElementById('latitude').value = position.lat;
+                    document.getElementById('longitude').value = position.lng;
+                });
+            }, function(error) {
+                if (error.code == error.PERMISSION_DENIED) {
+                    alert("You have denied access to your location. Please enable location services to use this feature.");
+                } else {
+                    alert("Error occurred while retrieving your location: " + error.message);
+                }
+            });
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        initMap();
+    });
+</script>
+{% endblock %}
