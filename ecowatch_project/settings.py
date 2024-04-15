@@ -145,8 +145,9 @@ STATIC_ROOT = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # GOOGLE_MAPS_API_KEY = 'AIzaSyDgXUKxb5aGyp8O3U1-Cg9ypyPHPj9sCyQ'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media/'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 

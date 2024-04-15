@@ -1,7 +1,7 @@
 from django import forms
 from ckeditor_uploader.fields import RichTextUploadingFormField
 from .models import Post, Category, Comment
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
+# from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 class PostForm(forms.ModelForm):
     body = RichTextUploadingFormField()
@@ -12,7 +12,6 @@ class PostForm(forms.ModelForm):
         widgets = {
             'categories': forms.SelectMultiple,  # Use forms.SelectMultiple widget for dropdown box
             "title": forms.TextInput( attrs={"class": "form-control", "autofocus": True, "id": "form-title"}),
-            'body': CKEditorUploadingWidget(attrs={"id": "form-body"})
         }
 
     def __init__(self, *args, **kwargs):
